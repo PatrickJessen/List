@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 template<typename T>
 class Vector
@@ -29,6 +30,7 @@ inline Vector<T>::Vector()
 	Reallocate(2);
 }
 
+
 template<typename T>
 inline Vector<T>::~Vector()
 {
@@ -50,10 +52,17 @@ inline void Vector<T>::Add(const T& value)
 template<typename T>
 inline void Vector<T>::RemoveAt(size_t index)
 {
-	data[index] = nullptr;
-	AllignToLeft();
-	size--;
-	Reallocate(maxCapacity - size);
+	int i;
+	for (i = 0; i < size; i++)
+		if (i == index)
+			break;
+
+	if (i < size)
+	{
+		size--;
+		for (int j = i; j < size; j++)
+			data[j] = data[j + 1];
+	}
 }
 
 template<typename T>
