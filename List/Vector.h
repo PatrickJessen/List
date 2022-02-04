@@ -11,10 +11,10 @@ public:
 	void Add(const T& value);
 	void RemoveAt(size_t index);
 	const size_t Size() { return size; }
+	T& At(size_t index);
 	T& operator[](size_t index);
 private:
 	void Reallocate(size_t capacity);
-	void AllignToLeft();
 private:
 	T* data;
 	size_t size;
@@ -66,6 +66,12 @@ inline void Vector<T>::RemoveAt(size_t index)
 }
 
 template<typename T>
+inline T& Vector<T>::At(size_t index)
+{
+	return data[index];
+}
+
+template<typename T>
 inline T& Vector<T>::operator[](size_t index)
 {
 	// Return data from index.
@@ -92,17 +98,4 @@ inline void Vector<T>::Reallocate(size_t capacity)
 
 	delete[] data;
 	data = newBlock;
-}
-
-template<typename T>
-inline void Vector<T>::AllignToLeft()
-{
-	for (int i = 0; i < size; i++)
-	{
-		if (data[i] == nullptr && data[i + 1] != nullptr)
-		{
-			data[i] = data[i + 1];
-			data[i + 1] = nullptr;
-		}
-	}
 }
